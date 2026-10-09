@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Тайный Санта · IT 2026</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎅</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="snow" aria-hidden="true"></div>
+
+  <main>
+    <p class="terminal-line"><span id="typed"></span><span class="cursor"></span></p>
+
+    <div class="card">
+      <section id="form-view">
+        <h1>🎅 Тайный Санта<br>IT Department 2026</h1>
+        <p class="sub">Введи свой секретный код от организатора, и узнаешь, кому готовишь подарок. Никто, кроме тебя, этого не увидит.</p>
+
+        <form id="form" autocomplete="off">
+          <label for="code">Секретный код</label>
+          <input id="code" type="text" placeholder="XXXXX-XXXXX" maxlength="16" spellcheck="false" required>
+          <button class="btn-primary" type="submit" id="go">git checkout мой-получатель</button>
+          <p class="error" id="error" role="alert"></p>
+        </form>
+
+        <p class="hint">Код вида <code>K7MQ2-XP9AD</code>, регистр и дефис не важны. Расшифровка идёт прямо в браузере, на сервер ничего не отправляется.</p>
+      </section>
+
+      <section id="reveal" class="reveal" aria-live="polite">
+        <div class="gift">🎁</div>
+        <p class="hello" id="hello"></p>
+        <p class="hello">Ты — Тайный Санта для:</p>
+        <p class="target" id="target"></p>
+        <div class="nda">
+          $ cat RULES.md<br>
+          &gt; NDA до 28.12 · бюджет 1000–2000 ₽<br>
+          &gt; не забудь открытку с анонимной подписью
+        </div>
+        <p class="hint">
+          Загляни в <a id="wishlist" href="#" target="_blank" rel="noopener">wishlist</a>, чтобы не гадать на кофейной гуще.
+        </p>
+        <div class="row">
+          <button class="btn-ghost" id="hide" type="button">Скрыть экран 🙈</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>release: 28.12.2026 · <a href="organizer.html">для организатора</a></footer>
+
+  <script src="santa.js"></script>
+  <script>
+    // Ссылка на вишлист: подставь свой адрес, если репозиторий другой
+    const WISHLIST_URL = "wishlist.md";
+
+    // ——— снег ———
+    const snow = document.querySelector(".snow");
+    for (let i = 0; i < 40; i++) {
+      const s = document.createElement("span");
+      s.textContent = Math.random() < .5 ? "❄" : "•";
+      s.style.left = Math.random() * 100 + "vw";
+      s.style.fontSize = (8 + Math.random() * 14) + "px";
+      s.style.animationDuration = (8 + Math.random() * 12) + "s";
+      s.style.animationDelay = (-Math.random() * 20) + "s";
+      snow.appendChild(s);
+    }
+
+    // ——— печатающаяся строка терминала ———
+    function typeLine(text) {
+      const el = document.getElementById("typed");
+      el.textContent = "";
+      let i = 0;
+      clearInterval(typeLine.t);
+      typeLine.t = setInterval(() => {
+        el.textContent = text.slice(0, ++i);
+        if (i >= text.length) clearInterval(typeLine.t);
+      }, 35);
+    }
+    typeLine("$ ./secret-santa --whoami");
+
+    // ——— логика ———
+    const form = document.getElementById("form");
+    const input = document.getElementById("code");
+    const btn = document.getElementById("go");
+    const err = document.getElementById("error");
+    document.getElementById("wishlist").href = WISHLIST_URL;
+
+    let drawData = null;
+    async function loadDraw() {
+      if (drawData) return drawData;
+      const res = await fetch("draw.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("no-draw");
+      drawData = await res.json();
+      return drawData;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      err.textContent = "";
+      btn.disabled = true;
+      btn.textContent = "Расшифровываю…";
+      try {
+        const data = await loadDraw();
+        if (!data.entries || !data.entries.length) {
+          err.textContent = "Жеребьёвка ещё не проведена. Жди сигнала от организатора.";
+          return;
+        }
+        const result = await SANTA.openEntry(input.value, data);
+        if (!result) {
+          err.textContent = "Код не подошёл: 404 Santa Not Found. Проверь, что ввёл его без ошибок.";
+          typeLine("$ ./secret-santa --whoami  # access denied");
+          return;
+        }
+        document.getElementById("hello").textContent = "Привет, " + result.giver + "!";
+        document.getElementById("target").textContent = result.receiver;
+        document.getElementById("form-view").classList.add("hidden");
+        document.getElementById("reveal").classList.add("show");
+        typeLine("$ git push origin gift  # 200 OK");
+      } catch (e2) {
+        err.textContent = location.protocol === "file:"
+          ? "Открой страницу через github.io (или локальный сервер): из файла браузер не даёт прочитать draw.json."
+          : "Не удалось загрузить draw.json. Проверь, что файл лежит рядом с index.html.";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "git checkout мой-получатель";
+      }
+    });
+
+    document.getElementById("hide").addEventListener("click", () => {
+      document.getElementById("reveal").classList.remove("show");
+      document.getElementById("form-view").classList.remove("hidden");
+      input.value = "";
+      typeLine("$ clear");
+    });
+  </script>
+</body>
+</html>
