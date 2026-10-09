@@ -1,6 +1,52 @@
 {
   "event": "Secret Santa IT Department 2026",
-  "created": null,
-  "participants": 0,
-  "entries": []
+  "created": "2026-10-09",
+  "participants": 9,
+  "entries": [
+    {
+      "id": "bfd6b6d3f58c65075dfe025a",
+      "iv": "TC8yoQ/w8OD37sBv",
+      "ct": "7sJP+SrtNB3ai39zPNEmWDN3Y0DOJoGkTBbGUA8BthPVz13k6y0wxLs6mx2FoRprAxxRvwvY1/AZ7Vae6slhVX/CFZMgAv5uuz5fgUqb"
+    },
+    {
+      "id": "3d242b8332772320733249e4",
+      "iv": "/PF3yHYx/9QYyGes",
+      "ct": "kymdj8vhPuTvrJAp0f8PvuKZsiQcW5emaqBrtHvyOQ4naoniW/yn/dvfyc6mYwSCx6uek7Wh+HjrpkpDyHaUx/4A5nICtgDZF5a944eF"
+    },
+    {
+      "id": "8672a2291b89480132d60f70",
+      "iv": "oCVwELVLZvwlMYep",
+      "ct": "snZNjz+0LkBhA9Ez1iXcV20vUammbtPtPCPZ+95Uc4kKtUZjHjRQj/rtI/7k6GcSqoTFsHaCQIRRtevGMLhYE+FmP6L8MXysaWBix/wf"
+    },
+    {
+      "id": "eab83d41d09ab11abd944b16",
+      "iv": "KjthUbNbgETfqvgA",
+      "ct": "QqmRBJsmlkmvXwQZAWnre6FTfW2+yXdTDYXeSSMnoxdi08/ctqjrlpo5Wy52B1tG7l2td6h4yf8lgalEGYRPKWuyzS/UMo9rkMZVpIB6"
+    },
+    {
+      "id": "62980c0afae5d126215177c7",
+      "iv": "O125WBQcw/URrWFm",
+      "ct": "cPBJ1V0fZ8xLMGsd2DDVj1JGNA4UkTv7PStI6SD79rnYnBTs60otYTPzciCDItS3xytlYEWuMmhOhPjrR3BaRvIbKj92UmoFCPoGD2XR"
+    },
+    {
+      "id": "bc2881e6c34da801d1632b71",
+      "iv": "8+qugz90wvQ7rZEc",
+      "ct": "7Y+3f8MJK5LVUWw3qm+taJsqn3KkRV+DyODyT7fCBCxRmqUyKaRoVxigbJJgIx/Y5pN+GaimskKChHCiqFzovOadh4xXZBS2nYtIPaEF"
+    },
+    {
+      "id": "94c0a686ef94f549c6b190ad",
+      "iv": "fZn542ammfgHsBLp",
+      "ct": "BQxeZz6rJTnHvYMXMyXIvZr6x6kQf0fH+i6OFDFk5Eg6mRI5OwJOZBztybIMh9YaaLEko2GrToJEWWPkG0CPtg8KVM9ECkW67yP/nYHk"
+    },
+    {
+      "id": "2370876fb63b298d7285622c",
+      "iv": "TocMye5vzQT/JCzb",
+      "ct": "V1VxBiBpCLOoEHBkm9orBgvZSsZZrVqvBiNV7mglVWCPRstgwYVPMETUSOBRqvhUmn+OK7gSYT802X+qhkjnH6vv9jY9y9OzmkLU2fnF"
+    },
+    {
+      "id": "ca7245b62f96618ee8fa420d",
+      "iv": "zVRycaHZoGsq/Y6r",
+      "ct": "/X8jUiWeRKPp8Z2vO6iHH31qPD/A7mLVxGR4QPniRepArY8szUUwcCPF6uwF0LVUstHcNsfKwPBr2504sXgybAMWg9tasOfTdP729+bh"
+    }
+  ]
 }
